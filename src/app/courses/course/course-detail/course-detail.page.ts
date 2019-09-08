@@ -1,28 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
 import {GolfCourseService} from '../../../shared/services/api.service';
+import {Course} from '../../../shared/models/course.model';
+// import * as _ from 'lodash';
 
 @Component({
   selector: 'app-course-detail',
   templateUrl: './course-detail.page.html',
   styleUrls: ['./course-detail.page.scss'],
 })
+
 export class CourseDetailPage implements OnInit {
+  private course: Course;
 
-  private course;
-
+  get courseId(): number {
+      return this.courseService.course.id;
+  }
   constructor(
-      private route: ActivatedRoute,
       private courseService: GolfCourseService
   ) {
-    console.log('**nav params:', this.course);
+    console.log('** course:', this.courseId);
   }
 
   ngOnInit() {
-    const observable = this.courseService.getCourse(this.course);
-    observable.subscribe(
-        (course: any) => (this.course = course)
-    );
+      const selectedCourseId = this.courseId;
+      this.courseService.getCourseById(selectedCourseId).subscribe(course => {
+          this.course = course;
+      });
   }
-
+  startGame() {
+      console.log('start game clicked', this.courseId);
+  }
 }

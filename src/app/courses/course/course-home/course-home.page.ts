@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {SelectedCourseService} from '../../../shared/services/selected-course.service';
 
 @Component({
   selector: 'app-course-home',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CourseHomePage implements OnInit {
 
-  constructor() { }
+  constructor(private selectedCourse: SelectedCourseService) { }
 
   ngOnInit() {
+  }
+  get course(): string {
+    return this.selectedCourse.course.name;
   }
 
 }

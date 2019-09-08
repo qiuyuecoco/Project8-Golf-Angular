@@ -9,13 +9,33 @@ import {Course} from './../models/course.model';
   providedIn: 'root'
 })
 export class GolfCourseService {
+  course: Course;
+  selectedCourse: Course;
+  private baseURL = 'https://golf-courses-api.herokuapp.com/courses';
+  private courses: Courses[];
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient) {}
+
+
+  getAllCourses(): Observable<any> {
+      // return this.httpClient.get(`${this.baseURL}`).pipe(map(data => data));
+      return this.httpClient.get<Courses>(`${this.baseURL}`).pipe(
+          map(data => data)
+      );
+  }
+  getCourseDetails(ID): Observable<any> {
+      return this.httpClient.get(`${this.baseURL}${ID}`).pipe(map(data => data));
+  }
+  getCourseById(ID): Observable<Course> {
+    return this.httpClient.get<Course>(`${this.baseURL}/${ID}`)
+        .pipe(map(course => {
+          this.selectedCourse = course;
+          return this.selectedCourse;
+        }));
   }
 
   getGolfCourses(): Observable<Course[]> {
     const url = 'https://golf-courses-api.herokuapp.com/courses';
-
     return this.httpClient.get<Courses>(url).pipe(
         map(data => data.courses)
     );

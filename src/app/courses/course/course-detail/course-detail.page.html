@@ -1,14 +1,66 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>Course details</ion-title>
-  </ion-toolbar>
+<ion-header *ngIf="course">
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{course.data.name}} Course Info</ion-title>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content>
-<div>
-  {{ course | json}}
-</div>
+<ion-content *ngIf="course">
+    <ion-card>
+        <ion-card-content >
+            <ion-grid>
+                <ion-card-header>
+                    <ion-title>Start your next game at {{course.data.name}}!</ion-title>
+                </ion-card-header>
+                    <ion-item>
+                        <ion-icon slot="start" color="medium" name="football"></ion-icon>
+                        <ion-button (click)="startGame()" >Start game!</ion-button>
+                    </ion-item>
+            </ion-grid>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-list>
+        <ion-item>
+            <ion-grid>
+                <ion-row>
+                    <ion-col>
+                        <img src="{{ course.data.thumbnail }}">
+                    </ion-col>
+                    <ion-card>
+                        <ion-card-content>
+                            <ion-grid>
+                                    <p>
+                                        {{ course.data.addr1 }},
+                                        {{ course.data.city }},
+                                        {{ course.data.stateOrProvince }},
+                                        {{ course.data.zipCode }}
+                                    </p>
+                                    <ion-item href="{{course.data.website}}">
+                                        <ion-icon slot="start" color="medium" name="globe"></ion-icon>
+                                        Redirects...
+                                    </ion-item>
+                                    <ion-item>
+                                        <ion-icon slot="start" color="medium" name="call"></ion-icon>
+                                        {{course.data.phone}}
+                                    </ion-item>
+                            </ion-grid>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+    </ion-list>
+<!--    <div>-->
+<!--    {{ course.data | json }}-->
+<!--    </div>-->
 </ion-content>
+
+<!--<ion-list *ngFor="let holes of course.data.holes">-->
+<!--    <ion-card-content>-->
+<!--        <ion-card-header>Results: {{holes.hole}}</ion-card-header>-->
+<!--        <ion-card-header *ngFor="let tees of holes.teeBoxes">Result: {{tees.teeType}}</ion-card-header>-->
+<!--    </ion-card-content>-->
+<!--</ion-list>-->
