@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {GolfCourseService} from '../../../shared/services/api.service';
 import {Course} from '../../../shared/models/course.model';
+import {NavController} from '@ionic/angular';
 // import * as _ from 'lodash';
 
 @Component({
@@ -16,18 +17,22 @@ export class CourseDetailPage implements OnInit {
       return this.courseService.course.id;
   }
   constructor(
-      private courseService: GolfCourseService
+      private courseService: GolfCourseService,
+      private navCtrl: NavController
   ) {
     console.log('** course:', this.courseId);
   }
 
   ngOnInit() {
       const selectedCourseId = this.courseId;
-      this.courseService.getCourseById(selectedCourseId).subscribe(course => {
+      this.courseService.getCourseById(selectedCourseId)
+          .subscribe(course => {
           this.course = course;
       });
   }
-  startGame() {
+  startGame(course: Course) {
       console.log('start game clicked', this.courseId);
+      this.courseService.course = course;
+      this.navCtrl.navigateForward('games');
   }
 }

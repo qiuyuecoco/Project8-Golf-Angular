@@ -22,8 +22,13 @@ export class AppComponent {
       icon: 'rose'
     },
     {
-      title: 'Games',
+      title: 'Game List',
       url: '/list',
+      icon: 'ribbon'
+    },
+    {
+      title: 'Game Page',
+      url: '/games',
       icon: 'ribbon'
     },
     // {

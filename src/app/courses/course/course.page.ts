@@ -6,10 +6,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-course',
-  templateUrl: './courseGame.page.html',
-  styleUrls: ['./courseGame.page.scss'],
+  templateUrl: './course.page.html',
+  styleUrls: ['./course.page.scss'],
 })
-export class CourseGamePage implements OnInit {
+export class CoursePage implements OnInit {
 
   constructor(
       private navCtrl: NavController,

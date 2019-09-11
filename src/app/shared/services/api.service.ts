@@ -4,10 +4,17 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Courses} from './../models/courses.model';
 import {Course} from './../models/course.model';
+import {environment} from '../../../environments/environment';
+import * as firebase from 'firebase';
+// import firestore from 'firebase/firestore';
+
+firebase.initializeApp(environment.firebase);
+const db = firebase.firestore();
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class GolfCourseService {
   course: Course;
   selectedCourse: Course;
@@ -22,9 +29,6 @@ export class GolfCourseService {
       return this.httpClient.get<Courses>(`${this.baseURL}`).pipe(
           map(data => data)
       );
-  }
-  getCourseDetails(ID): Observable<any> {
-      return this.httpClient.get(`${this.baseURL}${ID}`).pipe(map(data => data));
   }
   getCourseById(ID): Observable<Course> {
     return this.httpClient.get<Course>(`${this.baseURL}/${ID}`)

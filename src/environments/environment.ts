@@ -4,7 +4,15 @@
 
 export const environment = {
   production: false,
-  coursesURL: 'shared/course.json',
+  firebaseG: {
+    apiKey: 'AIzaSyCZltiLbYnleLexf6Zz51IX0jU6mTOvTYY',
+    authDomain: 'golf-app-f2fa5.firebaseapp.com',
+    databaseURL: 'https://golf-app-f2fa5.firebaseio.com',
+    projectId: 'golf-app-f2fa5',
+    storageBucket: '',
+    messagingSenderId: '386575129403',
+    appId: '1:386575129403:web:be7f388277aa9dfe08751e'
+  },
   firebase: {
     apiKey: 'AIzaSyB0y9QZMB1d3LrXyOW2N-eIGBXE242mjoM',
     authDomain: 'golf-app-games.firebaseapp.com',

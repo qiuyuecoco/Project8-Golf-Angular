@@ -16,7 +16,7 @@ const routes: Routes = [
     loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
   },
   { path: 'courses', loadChildren: './courses/courses.module#CoursesPageModule' },
-  { path: 'course', loadChildren: './courses/course/course.module#CoursePageModule' },
+  { path: 'course/', loadChildren: './courses/course/course.module#CoursePageModule' },
   { path: 'games', loadChildren: './games/games.module#GamesPageModule' },
   { path: 'course-detail', loadChildren: './courses/course/course-detail/course-detail.module#CourseDetailPageModule' },
   { path: 'tee-types', loadChildren: './courses/course/tee-types/tee-types.module#TeeTypesPageModule' },
