@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Course} from '../shared/models/course.model';
 import {GolfCourseService} from '../shared/services/api.service';
-import {NavController} from '@ionic/angular';
+import {LoadingController, NavController} from '@ionic/angular';
 
 @Component({
   selector: 'app-games',
@@ -9,45 +9,28 @@ import {NavController} from '@ionic/angular';
   styleUrls: ['./games.page.scss'],
 })
 export class GamesPage implements OnInit {
-  // private course: Course;
-  //
-  // get courseId(): any {
-  //   return this.courseService.course.id;
-  // }
-  // get courseHoles(): any {
-  //   return this.courseId;
-  // }
-  // constructor(
-  //     private courseService: GolfCourseService,
-  //     // private navCrtl: NavController
-  // ) {
-  //   console.log('courseDetails:', this.courseId);
-  //   console.log('courseHoles:', this.courseHoles);
-  // }
-  //
-  // ngOnInit() {
-  //   const selectedCourseId = this.courseId;
-  //   this.courseService.getCourseById(selectedCourseId)
-  //       .subscribe(course => {
-  //         this.course = course;
-  //       });
-  // }
-    private selectedItem: any;
+    private course: Course;
+    private players: any;
+    get courseId(): number {
+        return this.api.course.id;
+    }
     private icons = [
         'flask',
-        'wifi',
         'beer',
         'football',
-        'basketball',
-        'paper-plane',
-        'american-football',
         'boat',
-        'bluetooth',
-        'build'
+        'bluetooth'
     ];
     public items: Array<{ title: string; note: string; icon: string }> = [];
-    constructor() {
-        for (let i = 1; i < 11; i++) {
+    constructor(
+        private load: LoadingController,
+        private api: GolfCourseService,
+        private navCtrl: NavController
+
+    ) {
+          // console.log('courseDetails:', this.courseId);
+        //   console.log('courseHoles:', this.courseHoles);
+        for (let i = 1; i < 5; i++) {
             this.items.push({
                 title: 'Item ' + i,
                 note: 'This is item #' + i,
@@ -55,14 +38,25 @@ export class GamesPage implements OnInit {
             });
         }
     }
-
-    ngOnInit() {
+    async ngOnInit() {
+        const id = this.courseId;
+        // const id = 18300;
+        const loading = await this.load.create({
+            message: 'Game details...'
+        });
+        loading.present().then(() => {
+            this.api.getCourseById(id).subscribe(data => {
+                this.course = data;
+                console.log('course data: ', data);
+                loading.dismiss();
+            });
+        });
+    }
+    beginGame() {
+        console.log('beginGame clicked', this.items);
     }
     // add back when alpha.4 is out
     // navigate(item) {
     //   this.router.navigate(['/list', JSON.stringify(item)]);
     // }
-    beginGame() {
-        console.log('beginGame clicked', this.items);
-    }
 }

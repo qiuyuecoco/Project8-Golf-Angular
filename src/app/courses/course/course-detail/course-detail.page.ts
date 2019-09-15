@@ -30,9 +30,9 @@ export class CourseDetailPage implements OnInit {
           this.course = course;
       });
   }
-  startGame(course: Course) {
+  startGame(course) {
       console.log('start game clicked', this.courseId);
       this.courseService.course = course;
-      this.navCtrl.navigateForward('games');
+      this.navCtrl.navigateForward(['games', {id: course}]);
   }
 }

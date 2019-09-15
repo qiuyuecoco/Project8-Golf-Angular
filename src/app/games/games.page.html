@@ -18,11 +18,17 @@
         </ion-card-header>
         <ion-item>
           <ion-icon slot="start" color="medium" name="football"></ion-icon>
-          <ion-button (click)="beginGame()" >Start game!</ion-button>
+          <ion-button (click)="beginGame()" >Begin game!</ion-button>
         </ion-item>
       </ion-grid>
     </ion-card-content>
   </ion-card>
+
+    <ion-item>
+        <ion-input placeholder="Player's Name"></ion-input>
+        <ion-button (click)="addPlayer()">Add</ion-button>
+    </ion-item>
+
     <ion-list>
         <ion-item *ngFor="let item of items">
             <ion-icon [name]="item.icon" slot="start"></ion-icon>

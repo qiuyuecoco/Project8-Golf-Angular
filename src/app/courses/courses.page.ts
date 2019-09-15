@@ -50,7 +50,8 @@ export class CoursesPage implements OnInit {
     //   });
     courseTapped(course: Course) {
         this.api.course = course;
-        this.navCtrl.navigateForward('course-detail');
+        this.navCtrl.navigateForward(['course-detail', {id: course.id}]);
+        console.log(course.id);
     }
 
 //     async goToGameSetup() {

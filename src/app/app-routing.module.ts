@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
+
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -20,12 +21,14 @@ const routes: Routes = [
   { path: 'games', loadChildren: './games/games.module#GamesPageModule' },
   { path: 'course-detail', loadChildren: './courses/course/course-detail/course-detail.module#CourseDetailPageModule' },
   { path: 'tee-types', loadChildren: './courses/course/tee-types/tee-types.module#TeeTypesPageModule' },
-  { path: 'course-home', loadChildren: './courses/course/course-home/course-home.module#CourseHomePageModule' }
+  { path: 'course-home', loadChildren: './courses/course/course-home/course-home.module#CourseHomePageModule' },
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  { path: 'user', loadChildren: './user/user.module#UserPageModule' }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
   exports: [RouterModule]
 })

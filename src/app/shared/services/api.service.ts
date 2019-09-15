@@ -6,11 +6,10 @@ import {Courses} from './../models/courses.model';
 import {Course} from './../models/course.model';
 import {environment} from '../../../environments/environment';
 import * as firebase from 'firebase';
-// import firestore from 'firebase/firestore';
+import {AuthService} from './auth.service';
 
-firebase.initializeApp(environment.firebase);
-const db = firebase.firestore();
-
+// firebase.initializeApp(environment.firebase);
+// const db = firebase.firestore();
 @Injectable({
   providedIn: 'root'
 })
@@ -20,9 +19,22 @@ export class GolfCourseService {
   selectedCourse: Course;
   private baseURL = 'https://golf-courses-api.herokuapp.com/courses';
   private courses: Courses[];
+  loadedUser: any;
+  user: firebase.firestore.CollectionReference;
+  playerData: any;
+  players: string[] = [];
 
-  constructor(private httpClient: HttpClient) {}
-
+  constructor(
+      private httpClient: HttpClient,
+      private acctService: AuthService
+      ) {
+    this.user = this.acctService.dB.collection('USERS');
+  }
+  saveUser(user) {
+    this.user.doc(user.uid).update({user: this.playerData.players})
+        .then(_ => console.log('added:', this.playerData))
+        .catch(error => console.log('not added', error));
+  }
 
   getAllCourses(): Observable<any> {
       // return this.httpClient.get(`${this.baseURL}`).pipe(map(data => data));
@@ -37,51 +49,4 @@ export class GolfCourseService {
           return this.selectedCourse;
         }));
   }
-
-  getGolfCourses(): Observable<Course[]> {
-    const url = 'https://golf-courses-api.herokuapp.com/courses';
-    return this.httpClient.get<Courses>(url).pipe(
-        map(data => data.courses)
-    );
-  }
-
-  getCourse(courseId): Observable<any> {
-    const url = `https://golf-courses-api.herokuapp.com/courses/${courseId}`;
-    return this.httpClient.get(url).pipe(map(data => data)
-    );
-  }
 }
-
-
-// import {HttpClient} from '@angular/common/http';
-// import {Tournament} from './tournament.model';
-// import {Observable} from 'rxjs';
-// import {map} from 'rxjs/operators';
-//
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class EliteApiService {
-//
-//   currentTourney: any = [];
-//
-//   constructor(private http: HttpClient) { }
-//
-//   getTournaments(): Observable<Tournament[]> {
-//     return this.http.get<Tournament[]>(`${ environment.firebaseBaseUrl }/tournaments.json`);
-//   }
-//   getTournamentData(tourneyId): Observable<any> {
-//     return this.http.get(`${ environment.firebaseBaseUrl }/tournaments-data/${ tourneyId }.json`)
-//         .pipe(
-//             map(response => {
-//               this.currentTourney = response;
-//               return this.currentTourney;
-//             })
-//         );
-//   }
-//   getCurrentTourney() {
-//     return this.currentTourney;
-//   }
-//   // getTournamentData(tourneyId): Observable<any> {
-//   //   return this.http.get(`${ environment.firebaseBaseUrl }/tournaments-data/${ tourneyId }.json`);
-//   // }}
